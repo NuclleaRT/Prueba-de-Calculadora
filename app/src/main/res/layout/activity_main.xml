@@ -73,11 +73,10 @@
                 android:textSize="48sp" />
 
             <Button
-                android:id="@+id/button15"
+                android:id="@+id/btnC"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:onClick="pressBtnC"
                 android:text="C"
                 android:textSize="48sp" />
 
@@ -176,7 +175,9 @@
                 android:layout_weight="1"
                 android:onClick="clickOperation"
                 android:text="+"
-                android:textSize="48sp" />
+                android:textColorHighlight="#000000"
+                android:textSize="48sp"
+                android:backgroundTint="#8BC34A"/>
 
             <Button
                 android:id="@+id/btn0"
@@ -185,7 +186,8 @@
                 android:layout_weight="1"
                 android:onClick="pressButtons"
                 android:text="0"
-                android:textSize="48sp" />
+                android:textSize="48sp"
+                />
 
             <Button
                 android:id="@+id/Resta"
@@ -197,10 +199,11 @@
                 android:textSize="48sp" />
 
             <Button
-                android:id="@+id/button4"
+                android:id="@+id/btnIgual"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
+                android:onClick="calcularResultado"
                 android:text="="
                 android:textSize="48sp" />
         </TableRow>
