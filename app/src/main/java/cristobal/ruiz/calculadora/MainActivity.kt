@@ -27,17 +27,29 @@ class MainActivity : AppCompatActivity() {
         var btnigual: Button = findViewById(R.id.btnIgual)
 
         btnigual.setOnClickListener {
-            var numero2: Double = tv_num2.text.toString().toDouble()
-            var resp: Double = 0.0
+            val numero2Text = tv_num2.text.toString()
+            val numero2 = numero2Text.toDoubleOrNull()
 
-            when (oper) {
-                1 -> resp = numero1 + numero2
-                2 -> resp = numero1 - numero2
-                3 -> resp = numero1 * numero2
-                4 -> resp = numero1 / numero2
+            if (numero2 != null) {
+                var resp: Double = 0.0
+
+                when (oper) {
+                    1 -> resp = numero1 + numero2
+                    2 -> resp = numero1 - numero2
+                    3 -> resp = numero1 * numero2
+                    4 -> {
+                        if (numero2 != 0.0) {
+                            resp = numero1 / numero2
+                        } else {
+                            resp = Double.NaN // Nan me permite mostrar un resultado no valido
+                        }
+                    }
+                }
+
+                val resultadoFormateado = mostrarNumero(resp)
+                tv_num2.text = resultadoFormateado
+                tv_num1.text = ""
             }
-            tv_num2.setText(resp.toString())
-            tv_num1.setText("")
         }
 
         btnBorrar.setOnClickListener {
@@ -94,8 +106,18 @@ class MainActivity : AppCompatActivity() {
         }
 
     }
-}
 
+    fun mostrarNumero(numero: Double): String {
+        if (numero.isNaN()) {
+            return "No se puede dividir por cero"
+        }
+        return if (numero % 1 == 0.0) {
+            numero.toInt().toString()
+        } else {
+            numero.toString()
+        }
+    }
+}
 
 
 
