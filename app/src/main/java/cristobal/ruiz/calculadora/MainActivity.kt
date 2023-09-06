@@ -15,7 +15,8 @@ class MainActivity : AppCompatActivity() {
     lateinit var tv_num2: TextView
     var numero1: Double = 0.0
     var oper: Int = 0
-
+    lateinit var btnigual: Button
+    var especial: Double = 0.0
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -24,7 +25,7 @@ class MainActivity : AppCompatActivity() {
         tv_num1 = findViewById(R.id.tv_num1)
         tv_num2 = findViewById(R.id.tv_num2)
         val btnBorrar: Button = findViewById(R.id.btnC)
-        var btnigual: Button = findViewById(R.id.btnIgual)
+        btnigual = findViewById(R.id.btnIgual)
 
         btnigual.setOnClickListener {
             val numero2Text = tv_num2.text.toString()
@@ -80,36 +81,72 @@ class MainActivity : AppCompatActivity() {
     fun clickOperation(view: View) {
         numero1 = tv_num2.text.toString().toDouble()
         var numero2_text: String = tv_num2.text.toString()
-        tv_num2.setText("")
-        when (view.id) {
-            R.id.Suma -> {
+        val s = "+"
+        val r = "-"
+        val m = "*"
+        val d = "/"
+        if (tv_num1.text.contains(s) || tv_num1.text.contains(r) || tv_num1.text.contains(m) || tv_num1.text.contains(d)){
+                val numero2Text = tv_num2.text.toString()
+                val numero2 = numero2Text.toDoubleOrNull()
 
-                tv_num1.setText(numero2_text + "+")
-                oper = 1
+                if (numero2 != null) {
+                    var resp: Double = 0.0
+
+                    when (oper) {
+                        1 -> resp = especial + numero2
+                        2 -> resp = especial - numero2
+                        3 -> resp = especial * numero2
+                        4 -> {
+                            if (numero2 != 0.0) {
+                                resp = especial / numero2
+
+                            } else {
+                                resp = Double.NaN // Nan me permite mostrar un resultado no valido
+                            }
+                        }
+
+                    }
+                    especial = 0.0
+                    val resultadoFormateado = mostrarNumero(resp)
+                    tv_num2.text = resultadoFormateado
+                    tv_num1.text = ""
+                }
+
+        }else{
+            especial = tv_num2.text.toString().toDouble()
+            tv_num2.setText("")
+            when (view.id) {
+                R.id.Suma -> {
+
+                    tv_num1.setText(numero2_text + "+")
+                    oper = 1
+                }
+
+                R.id.Resta -> {
+                    tv_num1.setText(numero2_text + "-")
+                    oper = 2
+                }
+
+                R.id.Mult -> {
+                    tv_num1.setText(numero2_text + "*")
+                    oper = 3
+                }
+
+                R.id.Division -> {
+                    tv_num1.setText(numero2_text + "/")
+                    oper = 4
+                }
+
             }
-
-            R.id.Resta -> {
-                tv_num1.setText(numero2_text + "-")
-                oper = 2
-            }
-
-            R.id.Mult -> {
-                tv_num1.setText(numero2_text + "*")
-                oper = 3
-            }
-
-            R.id.Division -> {
-                tv_num1.setText(numero2_text + "/")
-                oper = 4
-            }
-
         }
+
+
 
     }
 
     fun mostrarNumero(numero: Double): String {
         if (numero.isNaN()) {
-            return "No se puede dividir por cero"
+            return "Error"
         }
         return if (numero % 1 == 0.0) {
             numero.toInt().toString()
