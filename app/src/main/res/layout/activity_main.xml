@@ -23,15 +23,6 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/tv_num1" />
 
-    <Button
-        android:id="@+id/toggleButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="388dp"
-        android:text="Encender Linterna"
-        app:layout_constraintTop_toTopOf="@+id/tableLayout"
-        tools:layout_editor_absoluteX="123dp" />
-
     <TextView
         android:id="@+id/tv_num1"
         android:layout_width="381dp"
@@ -49,7 +40,7 @@
         android:id="@+id/tableLayout"
         android:layout_width="371dp"
         android:layout_height="489dp"
-        android:layout_marginTop="116dp"
+        android:layout_marginTop="108dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.6"
         app:layout_constraintStart_toStartOf="parent"
@@ -64,7 +55,7 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:backgroundTint="#2196F3"
+                android:backgroundTint="#2998EF"
                 android:onClick="pressButtons"
                 android:text="7"
                 android:textSize="48sp" />
