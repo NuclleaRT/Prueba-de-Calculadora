@@ -5,11 +5,20 @@ import android.os.Bundle
 import android.view.View
 import android.widget.Button
 import android.widget.TextView
+import android.content.pm.PackageManager;
+import android.hardware.camera2.CameraAccessException;
+import android.hardware.camera2.CameraManager;
+
 
 
 
 class MainActivity : AppCompatActivity() {
     //0-> Nada, 1->Suma, 2->Resta, 3->Multiplicacion, 4->Division
+
+    private lateinit var cameraManager: CameraManager
+    private lateinit var cameraId: String
+    private var isFlashOn = false
+
 
     lateinit var tv_num1: TextView
     lateinit var tv_num2: TextView
@@ -22,7 +31,48 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        tv_num1 = findViewById(R.id.tv_num1)
+
+        // Verificar si el dispositivo tiene cámara con flash
+        val packageManager = packageManager
+        if (!packageManager.hasSystemFeature(PackageManager.FEATURE_CAMERA_FLASH)) {
+            // Tu dispositivo no tiene flash, realiza alguna acción apropiada
+            // o muestra un mensaje de error.
+        }
+
+        // Inicializar el administrador de la cámara
+        cameraManager = getSystemService(CAMERA_SERVICE) as CameraManager
+
+        // Obtener el ID de la cámara trasera con flash
+        try {
+            cameraId = cameraManager.cameraIdList[0]
+        } catch (e: CameraAccessException) {
+            e.printStackTrace()
+        }
+
+        val toggleButton = findViewById<Button>(R.id.toggleButton)
+        toggleButton.setOnClickListener(View.OnClickListener {
+            try {
+                if (isFlashOn) {
+                    // Apagar la linterna
+                    cameraManager.setTorchMode(cameraId, false)
+                    isFlashOn = false
+                    toggleButton.text = "Encender Linterna"
+                } else {
+                    // Encender la linterna
+                    cameraManager.setTorchMode(cameraId, true)
+                    isFlashOn = true
+                    toggleButton.text = "Apagar Linterna"
+                }
+            } catch (e: CameraAccessException) {
+                e.printStackTrace()
+            }
+        })
+
+
+
+
+
+    tv_num1 = findViewById(R.id.tv_num1)
         tv_num2 = findViewById(R.id.tv_num2)
         val btnBorrar: Button = findViewById(R.id.btnC)
         btnigual = findViewById(R.id.btnIgual)
