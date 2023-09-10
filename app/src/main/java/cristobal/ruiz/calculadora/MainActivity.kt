@@ -8,9 +8,6 @@ import android.widget.TextView
 import android.widget.Toast
 
 
-
-
-
 class MainActivity : AppCompatActivity() {
     //0-> Nada, 1->Suma, 2->Resta, 3->Multiplicacion, 4->Division
 
@@ -46,7 +43,7 @@ class MainActivity : AppCompatActivity() {
                         if (numero2 != 0.0) {
                             resp = numero1 / numero2
                         } else {
-                            resp = Double.NaN // Nan me permite mostrar un resultado no valido
+                            resp = Double.NaN
                         }
                     }
                 }
@@ -121,6 +118,7 @@ class MainActivity : AppCompatActivity() {
             val numero2Text = tv_num2.text.toString()
             val numero2 = numero2Text.toDoubleOrNull()
 
+
             if (numero2 != null) {
                 var resp: Double = 0.0
 
@@ -141,7 +139,10 @@ class MainActivity : AppCompatActivity() {
                 val resultadoFormateado = mostrarNumero(resp)
                 tv_num2.text = resultadoFormateado
                 tv_num1.text = ""
+
+
             }
+
         } else {
 
             especial = tv_num2.text.toString().toDouble()
